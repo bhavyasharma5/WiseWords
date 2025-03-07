@@ -38,6 +38,13 @@ const WiseWords = () => {
     setIsFavorite(false)
   }
 
+  const getPrevQuote = () => {
+    setCurrentQuoteIndex((prevIndex) => 
+      prevIndex === 0 ? quotes.length - 1 : prevIndex - 1
+    )
+    setIsFavorite(false)
+  }
+
   const toggleFavorite = () => {
     if (!isFavorite) {
       if (favoriteQuotes.length >= 5) {
@@ -67,7 +74,7 @@ const WiseWords = () => {
         <div className="decorative-circle-3"></div>
         
         <div className="card-header">
-          <h2>QUOTE.</h2>
+          <h2>WISEWORDS</h2>
           <button 
             className={`favorite-btn ${isFavorite ? 'favorite-active' : ''}`}
             onClick={toggleFavorite}
@@ -88,12 +95,17 @@ const WiseWords = () => {
         </div>
 
         <div className="card-actions">
+          <button className="action-btn prev-quote" onClick={getPrevQuote}>
+            <span className="material-icons">arrow_back</span>
+            PREV
+          </button>
           <button className="action-btn new-quote" onClick={getNewQuote}>
-            NEW QUOTE
+            <span className="material-icons">arrow_forward</span>
+            NEXT
           </button>
           <button className="action-btn favorite-quotes" onClick={toggleFavoritesList}>
             <span className="material-icons">bookmarks</span>
-            FAVORITES
+            {favoriteQuotes.length > 0 ? `FAVORITES (${favoriteQuotes.length})` : "FAVORITES"}
           </button>
         </div>
       </div>

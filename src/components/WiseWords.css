@@ -145,6 +145,8 @@
   justify-content: center;
   gap: 1rem;
   margin-top: 3rem;
+  flex-wrap: wrap;
+  gap: 0.8rem;
 }
 
 .action-btn {
@@ -153,7 +155,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 1rem 2rem;
+  padding: 0.8rem 1.5rem;
   border: none;
   border-radius: 30px;
   font-weight: 500;
@@ -161,6 +163,7 @@
   transition: all 0.3s ease;
   letter-spacing: 1px;
   font-size: 0.9rem;
+  min-width: 120px;
 }
 
 .action-btn:hover {
@@ -168,14 +171,21 @@
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
+.prev-quote {
+  background: linear-gradient(135deg, #7c3aed, #a78bfa);
+  color: white;
+}
+
 .new-quote {
-  background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);
+  background: linear-gradient(135deg, #a78bfa, #7c3aed);
   color: white;
 }
 
 .favorite-quotes {
   background: linear-gradient(135deg, #84fab0, #8fd3f4);
   color: white;
+  min-width: 180px;  /* Ensure enough space for the longer text */
+  justify-content: center;
 }
 
 /* Remove the decorative elements and replace with subtle gradient border */
