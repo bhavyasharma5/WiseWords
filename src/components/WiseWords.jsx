@@ -42,7 +42,7 @@ const WiseWords = () => {
     if (!isFavorite) {
       if (favoriteQuotes.length >= 5) {
         setShowWarning(true)
-        setTimeout(() => setShowWarning(false), 3000) // Hide warning after 3 seconds
+        setTimeout(() => setShowWarning(false), 3000)
         return
       }
       setFavoriteQuotes([...favoriteQuotes, quotes[currentQuoteIndex]])
