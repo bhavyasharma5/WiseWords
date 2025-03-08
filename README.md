@@ -1,6 +1,6 @@
 # WordWise - A Quote Generator App
 
-![WordWise App Screenshot](./screenshot.png)
+![WordWise App Screenshot](./Screenshot.png)
 
 ## Overview
 
