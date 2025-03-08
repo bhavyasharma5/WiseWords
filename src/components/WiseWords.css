@@ -428,4 +428,214 @@
   to {
     opacity: 0;
   }
+}
+
+/* Add these styles to your existing CSS file */
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(28, 27, 34, 0.85);
+  backdrop-filter: blur(10px);
+  border-radius: 25px;
+  padding: 3rem;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.loading p {
+  color: white;
+  margin-top: 1.5rem;
+  font-size: 1.2rem;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border-top-color: #a78bfa;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error-message {
+  background: rgba(28, 27, 34, 0.85);
+  backdrop-filter: blur(10px);
+  border-radius: 25px;
+  padding: 3rem;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.error-message p {
+  color: #ff6b6b;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.error-message button {
+  background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.error-message button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Add these styles to your existing CSS file */
+
+.card-actions-top {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.category-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.category-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.categories-modal {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.categories-content {
+  background: rgba(28, 27, 34, 0.95);
+  border-radius: 25px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.categories-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.categories-header h2 {
+  color: white;
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.categories-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  max-height: calc(80vh - 100px);
+  overflow-y: auto;
+  padding-right: 1rem;
+}
+
+.category-item {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 0.8rem 1.5rem;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.category-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.category-item.active {
+  background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);
+  border-color: transparent;
+}
+
+.favorite-quote-category {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 0.5rem;
+  text-transform: capitalize;
+}
+
+/* Add these styles to your existing CSS file */
+
+.quote-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.quote-tag {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.favorite-quote-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.favorite-quote-tag {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.6);
 } 
