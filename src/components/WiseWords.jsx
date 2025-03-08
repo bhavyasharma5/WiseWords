@@ -10,6 +10,9 @@ const WiseWords = () => {
   const [favoriteQuotes, setFavoriteQuotes] = useState([])
   const [showWarning, setShowWarning] = useState(false)
   const [usedQuoteIndices, setUsedQuoteIndices] = useState([])
+  const [quoteHistory, setQuoteHistory] = useState([0])
+  const [historyPosition, setHistoryPosition] = useState(0)
+  const [copySuccess, setCopySuccess] = useState(false)
 
   // Fallback quotes in case API fails
   const fallbackQuotes = [
@@ -96,49 +99,52 @@ const WiseWords = () => {
   const getNewQuote = () => {
     if (quotes.length === 0) return
     
-    // If we have fewer than 3 quotes, just go to the next one
-    if (quotes.length < 3) {
-      const nextIndex = (currentQuoteIndex + 1) % quotes.length
-      setCurrentQuoteIndex(nextIndex)
-      
-      // Check if the quote is in favorites
-      const isNextQuoteFavorite = favoriteQuotes.some(
-        fav => fav._id === quotes[nextIndex]._id
-      )
-      setIsFavorite(isNextQuoteFavorite)
-      return
-    }
-    
-    // Find a quote that isn't the current one
+    // Generate a new random index that's different from the current one
     let nextIndex
     let attempts = 0
     do {
       nextIndex = Math.floor(Math.random() * quotes.length)
       attempts++
-    } while (nextIndex === currentQuoteIndex && attempts < 5)
+    } while (nextIndex === currentQuoteIndex && attempts < 10)
     
     setCurrentQuoteIndex(nextIndex)
     
+    // Add this new index to history and trim history if we're not at the end
+    if (historyPosition < quoteHistory.length - 1) {
+      // If we're in the middle of history, truncate forward history
+      setQuoteHistory(prevHistory => [...prevHistory.slice(0, historyPosition + 1), nextIndex])
+    } else {
+      // Otherwise just append to history
+      setQuoteHistory(prevHistory => [...prevHistory, nextIndex])
+    }
+    
+    // Update history position to point to the new quote
+    setHistoryPosition(prevPosition => prevPosition + 1)
+    
     // Check if the quote is in favorites
-    const isNextQuoteFavorite = favoriteQuotes.some(
+    const isQuoteFavorite = favoriteQuotes.some(
       fav => fav._id === quotes[nextIndex]._id
     )
-    setIsFavorite(isNextQuoteFavorite)
+    setIsFavorite(isQuoteFavorite)
   }
 
   // Get previous quote
   const getPrevQuote = () => {
-    if (quotes.length === 0) return
+    if (quotes.length === 0 || historyPosition <= 0) return
     
-    // Simpler approach: go to the previous quote in the array
-    const prevIndex = (currentQuoteIndex - 1 + quotes.length) % quotes.length
+    // Move back one position in history
+    const newPosition = historyPosition - 1
+    setHistoryPosition(newPosition)
+    
+    // Set the current quote index to the one at this history position
+    const prevIndex = quoteHistory[newPosition]
     setCurrentQuoteIndex(prevIndex)
     
     // Check if the quote is in favorites
-    const isPrevQuoteFavorite = favoriteQuotes.some(
+    const isQuoteFavorite = favoriteQuotes.some(
       fav => fav._id === quotes[prevIndex]._id
     )
-    setIsFavorite(isPrevQuoteFavorite)
+    setIsFavorite(isQuoteFavorite)
   }
 
   const toggleFavorite = () => {
@@ -180,6 +186,23 @@ const WiseWords = () => {
     }
   }, [quotes, currentQuoteIndex, usedQuoteIndices.length])
 
+  const copyToClipboard = () => {
+    if (quotes.length === 0) return;
+    
+    const currentQuote = quotes[currentQuoteIndex];
+    const textToCopy = `"${currentQuote.content}" — ${currentQuote.author}`;
+    
+    navigator.clipboard.writeText(textToCopy)
+      .then(() => {
+        // Show a temporary success message
+        setCopySuccess(true);
+        setTimeout(() => setCopySuccess(false), 2000);
+      })
+      .catch(err => {
+        console.error('Failed to copy text: ', err);
+      });
+  };
+
   if (isLoading) {
     return (
       <div className="wise-words-container">
@@ -215,14 +238,26 @@ const WiseWords = () => {
         
         <div className="card-header">
           <h2>WISEWORDS</h2>
-          <button 
-            className={`favorite-btn ${isFavorite ? 'favorite-active' : ''}`}
-            onClick={toggleFavorite}
-          >
-            <span className="material-icons">
-              {isFavorite ? 'favorite' : 'favorite_border'}
-            </span>
-          </button>
+          <div className="card-actions-top">
+            <button 
+              className="copy-btn"
+              onClick={copyToClipboard}
+              title="Copy quote"
+            >
+              <span className="material-icons">
+                content_copy
+              </span>
+            </button>
+            <button 
+              className={`favorite-btn ${isFavorite ? 'favorite-active' : ''}`}
+              onClick={toggleFavorite}
+              title={isFavorite ? "Remove from favorites" : "Add to favorites"}
+            >
+              <span className="material-icons">
+                {isFavorite ? 'favorite' : 'favorite_border'}
+              </span>
+            </button>
+          </div>
         </div>
         
         <div className="quote-content">
@@ -293,6 +328,13 @@ const WiseWords = () => {
               )}
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Copy Success Message */}
+      {copySuccess && (
+        <div className="copy-success-message">
+          Quote copied to clipboard!
         </div>
       )}
     </div>
